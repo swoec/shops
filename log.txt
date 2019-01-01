@@ -1,0 +1,106 @@
+ssnvutmpqf
+
+HQ666BV93422
+
+「TVNZ-Duck Bro: 数组 找子数组」
+—————————
+「许丁丁 BNZ: 一个hash map」
+—————————
+「TVNZ-Duck Bro: 一道数组排序」
+—————————
+「TVNZ-Duck Bro: 一道二分法改错」
+—————————
+
+git remote set-url origin git@github.com:swoec/test.git
+git remote set-url origin git@github.com:swoec/cv.git
+
+django-admin startproject projectname
+
+python manager.py runserver 9999
+
+python manager.py startapp mailbox
+
+python manager.py makemigrations appname
+
+python manager.py migrate
+
+python manager.py sqlmigrate appname fileid
+
+python manager.py createsuperuser
+
+
+pip3  install  virtualenv
+pip virtualenv - version
+
+virtualenv -p /usr/bin/python3 name
+
+virtualenv env4mooc
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+pip3 install virtualenvwrapper
+whereis virtualenvwrapper.sh
+sudo gedit ~/.bachrc
+
+
+pip install celery[redis]
+
+pyenv install 2.7.4
+pyenv virtualenv 2.7.4 mooc
+pyenv workon mooc
+deactivate
+subl .
+
+pyenv activate mooc
+pip install redis==2.10.6
+celery beat -A celery_app -l INFO
+celery worker -A celery_app -l INFO
+celery -B -A celery_app worker -l INFO
+pip3 install django-celery
+
+worker: python manage.py celery worker -Q queue
+
+
+python manage.py celery worker -l INFO
+
+pip install mysqlclient
+
+python manage.py celery beat -l INFO
+
+pip install flower
+
+celery flower --address=0.0.0.0 --port=5555 --broker=redis://localhost:6379/1
+
+python manage.py celery flower
+
+sudo find / -name mooc
+
+
+pip install -r requirement.txt
+
+www.lfd.uci.edu/~gohlke/pythonlibs/
+
+pip install pillow (deal with image)
+
+
+pip install drf-extensions
+
+pyenv install -l 
+pyenv install 3.6.1
+
+pyenv shell 3.6.4
+
+pyenv virtualenvs
+
+pyenv activate 
+pyenv versions
+
+pyenv virtualenv 3.6.0 mooc
+pyenv activate mooc
+
+pip list 
+
+
+sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+ FLUSH PRIVILEGES;
+
