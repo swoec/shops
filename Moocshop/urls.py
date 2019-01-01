@@ -24,6 +24,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from goods.views import GoodsListViewSet
 from user_operation.views import UserFavListViewSet
 from trade.views import ShopCartViewset, OrderViewset
+from forum.views import TopicListViewSet, TopicCreateViewSet
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet, base_name='goods')
@@ -31,6 +32,8 @@ router.register(r'userfav', UserFavListViewSet, base_name='userfav')
 
 router.register(r'shopcart', ShopCartViewset, base_name='shopcart')
 router.register(r'order', OrderViewset, base_name='order')
+router.register(r'topic', TopicListViewSet, base_name='topics')
+router.register(r'ct', TopicCreateViewSet, base_name='ct')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

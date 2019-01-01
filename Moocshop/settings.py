@@ -29,7 +29,9 @@ SECRET_KEY = '$q2t2@z(8!(i6gao-b7omxm4&m_e)a-+a#d#ib$3_es#z+m!32'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '192.168.1.69', ]
+
+USE_X_FORWARDED_HOST = True
 
 
 # Application definition
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'trade',
     'users',
     'user_operation',
+    'forum',
 
     'DjangoUeditor',
     'crispy_forms',
@@ -99,8 +102,10 @@ DATABASES = {
         'NAME': "mxshop",
         'USER': 'root',
         'PASSWORD': "123456",
-        'HOST': "192.168.1.70"
-
+        'HOST': "192.168.1.70",
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB',
+                     }
     }
 }
 
@@ -140,7 +145,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 
-MEDIA_URL = "http://127.0.0.1:9999/media/"
+MEDIA_URL = "http://192.168.1.69:9999/media/"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -174,8 +179,18 @@ JWT_AUTH = {
 
 #STATIC_URL = '/static/'
 
+CELERY_BROKER_URL = 'redis://192.168.1.70:6379'
+CELERY_RESULT_BACKEND = 'redis://192.168.1.70:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
 
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '192.168.1.70:9200'
+    },
+}
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",

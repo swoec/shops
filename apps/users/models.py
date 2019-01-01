@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractBaseUser
 
 class UserProfile(AbstractBaseUser):
     """
-    User
+    UserProfile
     """
     name = models.CharField(max_length=80, null=True, blank=True, verbose_name="name")
     gender = models.CharField(max_length=6, choices=(("male","male"),("female","female")), default="female", verbose_name="gender")
@@ -18,7 +18,7 @@ class UserProfile(AbstractBaseUser):
     mobile = models.CharField(max_length=20,null=True, blank=True)
 
     class Meta:
-        verbose_name = "user"
+        verbose_name = "user Profile"
         verbose_name_plural = verbose_name
 
     def __str__(self):
