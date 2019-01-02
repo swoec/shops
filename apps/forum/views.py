@@ -39,12 +39,14 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
     ordering_fields = ('title', 'add_time')
 
     parser_classes = (MultiPartParser,)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-
-        return Response(serializer.data)
+    #
+    # def get_queryset(self):
+    #     return Topic.objects.all()
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #
+    #     return Response(serializer.data)
 
     # def post(self, request, format=None):
     #     """
