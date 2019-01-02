@@ -24,7 +24,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from goods.views import GoodsListViewSet
 from user_operation.views import UserFavListViewSet
 from trade.views import ShopCartViewset, OrderViewset
-from forum.views import TopicListViewSet, TopicCreateViewSet
+from forum.views import TopicListViewSet, TopicCreateViewSet, CommentsViewSet
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet, base_name='goods')
@@ -34,6 +34,7 @@ router.register(r'shopcart', ShopCartViewset, base_name='shopcart')
 router.register(r'order', OrderViewset, base_name='order')
 router.register(r'topic', TopicListViewSet, base_name='topics')
 router.register(r'ct', TopicCreateViewSet, base_name='ct')
+router.register(r'comment', CommentsViewSet, base_name='comments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,8 +43,6 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'docs/', include_docs_urls(title="online shop")),
-    #url('', include('social_django.urls', namespace='social')),
-
-
+    # url('', include('social_django.urls', namespace='social')),
 
 ]

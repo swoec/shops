@@ -185,6 +185,8 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
+REGEX_IMAGE = "^.*\.(?i)(PNG|JPG|GIF|png|jpg|gif|JPEG|JFIF|BMP|bmp|webp|bat|BAT|BPG|ICO|PSD|psd|PSP|psp|AMF|dwf|dxf|PDF|IMG|ECW)$"
+REGEX_VIDEO = "^.*\.(?i)(MP4|mp4|MOV|mov|avi|AVI|rm|gif|wmv|rmvb|mpv|MPV|m4v|flv|gifv|webm|asf|3gp|nsv|vob)$"
 
 ELASTICSEARCH_DSL = {
     'default': {

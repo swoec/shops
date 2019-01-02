@@ -90,6 +90,6 @@ class Comments(models.Model):
 
     def __str__(self):
         self.title = self.topic.title
-        return self.title
+        return self.content
 
 

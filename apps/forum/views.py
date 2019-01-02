@@ -15,7 +15,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Topic, Category, Video, Image, Comments
-from .serializers import TopicSerializer, TopicsCreateSerializer
+from .serializers import TopicSerializer, TopicsCreateSerializer, CommentsSerializer
 from .filters import TopicFilter
 
 
@@ -57,13 +57,6 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
     #     image = Image()
 
 
-
-
-
-
-
-
-
 class TopicCreateViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin,
                          viewsets.GenericViewSet):
     queryset = Topic.objects.all()
@@ -99,3 +92,11 @@ class TopicCreateViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixin
         re_dict = serializer.data
         header = self.get_success_headers(serializer.data)
         return Response(re_dict, status=status.HTTP_201_CREATED)
+
+
+class CommentsViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
+    queryset = Comments.objects.all()
+    serializer_class = CommentsSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    search_fields = {'topic'}
