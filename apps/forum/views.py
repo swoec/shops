@@ -41,12 +41,23 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
     parser_classes = (MultiPartParser,)
     #
     # def get_queryset(self):
-    #     return Topic.objects.all()
-    # def retrieve(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     serializer = self.get_serializer(instance)
+    #     sete = Topic.objects.all()
+    #     for s in sete:
+    #         s.image = Image.objects.filter(topic=s.id)
+    #         s.video = Video.objects.filter(topic=s.id)
+    #         s.comments = Comments.objects.filter(topic=s.id)
+    #         sete.update_or_create(s)
     #
-    #     return Response(serializer.data)
+    #     return sete
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.image = Image.objects.filter(topic=instance.id)
+        instance.video = Video.objects.filter(topic=instance.id)
+        instance.comments = Comments.objects.filter(topic=instance.id)
+
+        serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
 
     # def post(self, request, format=None):
     #     """
