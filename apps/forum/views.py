@@ -9,6 +9,7 @@ from rest_framework import authentication, status
 from rest_framework import permissions
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
+from rest_framework.decorators import action
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -39,14 +40,52 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
     ordering_fields = ('title', 'add_time')
 
     parser_classes = (MultiPartParser,)
+
     #
     # def get_queryset(self):
-    #     sete = Topic.objects.all()
-    #     for s in sete:
-    #         s.image = Image.objects.filter(topic=s.id)
-    #         s.video = Video.objects.filter(topic=s.id)
-    #         s.comments = Comments.objects.filter(topic=s.id)
-    #         sete.update_or_create(s)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # return queryset
+        # for q in queryset:
+        #     q.model.image_set = Image.objects.filter(topic=q.id)
+        #     q.model.video_set = Video.objects.filter(topic=q.id)
+        #     q.model.comments_st = Comments.objects.filter(topic=q.id)
+        # q.save()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            for q in serializer.data:
+                q.image = Image.objects.filter(topic=q['id'])
+                q.video = Video.objects.filter(topic=q['id'])
+                q.comments = Comments.objects.filter(topic=q['id'])
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        for q in serializer.data:
+            q.image = Image.objects.filter(topic=q['id'])
+            q.video = Video.objects.filter(topic=q['id'])
+            q.comments = Comments.objects.filter(topic=q['id'])
+            # serializer.data.append(q)
+
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=False)
+    def add_value(self, request, id = None):
+        # queryset = Topic.objects.
+        queryset = Topic.objects.filter(id=id)
+        serializer = self.get_serializer(queryset, many=True)
+        for q in serializer.data:
+            q.image = Image.objects.filter(topic=q['id'])
+            q.video = Video.objects.filter(topic=q['id'])
+            q.comments = Comments.objects.filter(topic=q['id'])
+
+
+        return Response(serializer.data)
+
+
     #
     #     return sete
     def retrieve(self, request, *args, **kwargs):

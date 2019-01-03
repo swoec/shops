@@ -26,6 +26,13 @@ from user_operation.views import UserFavListViewSet
 from trade.views import ShopCartViewset, OrderViewset
 from forum.views import TopicListViewSet, TopicCreateViewSet, CommentsViewSet
 
+contact_list = TopicListViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+    'put': 'update',
+    'delete': 'destroy'
+})
+
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet, base_name='goods')
 router.register(r'userfav', UserFavListViewSet, base_name='userfav')

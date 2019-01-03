@@ -50,13 +50,17 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Topic
         # fields = ('image','video', 'comments' )
         # fields = '__all__'
-        fields = ('image', 'video', 'comments', 'title', 'context', 'user', 'category', 'add_time')
+        fields = ('image', 'video', 'comments', 'title', 'context', 'user', 'category', 'add_time', 'id')
 
     def create(self, validated_data):
 
         user = validated_data['user']
-        topic = Topic.objects.create(title=validated_data['title'], context=validated_data['context'],
+        tpc = Topic.objects.filter(title=validated_data['title'], category=validated_data['category'])
+        if tpc is None:
+            topic = Topic.objects.create(title=validated_data['title'], context=validated_data['context'],
                                      category=validated_data['category'], user=validated_data['user'])
+        else:
+            topic = tpc[0]
 
         files = self.context.get('view').request.FILES
 
