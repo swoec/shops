@@ -18,6 +18,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Topic, Category, Video, Image, Comments
 from .serializers import TopicSerializer, TopicsCreateSerializer, CommentsSerializer
 from .filters import TopicFilter
+from utils.permissions import IsOwnerOrReadOnly
 
 
 class TopicPagination(PageNumberPagination):
@@ -35,6 +36,8 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
     serializer_class = TopicSerializer
     pagination_class = TopicPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
     filter_class = TopicFilter
     search_fields = ('title', 'context', 'add_time')
     ordering_fields = ('title', 'add_time')
@@ -85,9 +88,6 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
 
         return Response(serializer.data)
 
-
-    #
-    #     return sete
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.image = Image.objects.filter(topic=instance.id)

@@ -142,10 +142,10 @@ USE_L10N = True
 
 USE_TZ = False
 
-STATIC_URL = '/static/'
+STATIC_URL = 'http://192.168.1.74:9999/static/'
 
 
-MEDIA_URL = "http://192.168.1.69:9999/media/"
+MEDIA_URL = "http://192.168.1.74:9999/media/"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
