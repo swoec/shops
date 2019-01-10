@@ -1,12 +1,13 @@
 from django.db import models
 
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, get_permission_codename
 from datetime import  datetime
 
 from goods.models import Goods
 
 User = get_user_model()
+
 
 # Create your models here.
 

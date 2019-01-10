@@ -11,6 +11,8 @@ from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 from rest_framework.decorators import action
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
@@ -18,7 +20,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Topic, Category, Video, Image, Comments
 from .serializers import TopicSerializer, TopicsCreateSerializer, CommentsSerializer
 from .filters import TopicFilter
-from utils.permissions import IsOwnerOrReadOnly
+from apps.utils.permissions import IsOwnerOrReadOnly
 
 
 class TopicPagination(PageNumberPagination):
@@ -76,7 +78,7 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
-    def add_value(self, request, id = None):
+    def add_value(self, request, id=None):
         # queryset = Topic.objects.
         queryset = Topic.objects.filter(id=id)
         serializer = self.get_serializer(queryset, many=True)
@@ -84,7 +86,6 @@ class TopicListViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateM
             q.image = Image.objects.filter(topic=q['id'])
             q.video = Video.objects.filter(topic=q['id'])
             q.comments = Comments.objects.filter(topic=q['id'])
-
 
         return Response(serializer.data)
 
@@ -146,9 +147,14 @@ class TopicCreateViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixin
         return Response(re_dict, status=status.HTTP_201_CREATED)
 
 
-class CommentsViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+class CommentsViewSet(PermissionRequiredMixin, mixins.ListModelMixin, mixins.CreateModelMixin,
+                      mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
                       viewsets.GenericViewSet):
     queryset = Comments.objects.all()
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
+    PermissionRequiredMixin.login_url = '/login'
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+    permission_required = 'view_comments'
     serializer_class = CommentsSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = {'topic'}

@@ -10,7 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
-from utils.permissions import IsOwnerOrReadOnly
+from apps.utils.permissions import IsOwnerOrReadOnly
 
 from .models import UserFav
 from .serializers import UserFavDetailSerializer, UserFavSerializer

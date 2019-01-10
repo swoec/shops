@@ -25,6 +25,7 @@ from goods.views import GoodsListViewSet
 from user_operation.views import UserFavListViewSet
 from trade.views import ShopCartViewset, OrderViewset
 from forum.views import TopicListViewSet, TopicCreateViewSet, CommentsViewSet
+from users.views import UserViewset, CitizenViewset, PositionViewset, UseraddViewSet
 
 contact_list = TopicListViewSet.as_view({
     'get': 'list',
@@ -36,6 +37,10 @@ contact_list = TopicListViewSet.as_view({
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet, base_name='goods')
 router.register(r'userfav', UserFavListViewSet, base_name='userfav')
+router.register(r'user', UserViewset, base_name='user')
+router.register(r'citizen', CitizenViewset, base_name='citizens')
+router.register(r'position', PositionViewset, base_name='position')
+router.register(r'useradd', UseraddViewSet, base_name='useradd')
 
 router.register(r'shopcart', ShopCartViewset, base_name='shopcart')
 router.register(r'order', OrderViewset, base_name='order')

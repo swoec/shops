@@ -10,15 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-
-
 import os
 import sys
+import os.path
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+
+
+PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -32,7 +35,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*', '192.168.1.69', ]
 
 USE_X_FORWARDED_HOST = True
-
 
 # Application definition
 
@@ -91,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Moocshop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -105,10 +106,9 @@ DATABASES = {
         'HOST': "192.168.1.70",
         'OPTIONS': {
             'init_command': 'SET default_storage_engine=INNODB',
-                     }
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -128,11 +128,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Pacific/Auckland'
 
@@ -142,15 +141,16 @@ USE_L10N = True
 
 USE_TZ = False
 
-STATIC_URL = 'http://192.168.1.74:9999/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
 
-
-MEDIA_URL = "http://192.168.1.74:9999/media/"
+MEDIA_URL = "/media/"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 
 REST_FRAMEWORK = {
@@ -169,6 +169,7 @@ REST_FRAMEWORK = {
 }
 
 import datetime
+
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
@@ -177,7 +178,7 @@ JWT_AUTH = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-#STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 CELERY_BROKER_URL = 'redis://192.168.1.70:6379'
 CELERY_RESULT_BACKEND = 'redis://192.168.1.70:6379'
@@ -195,7 +196,7 @@ ELASTICSEARCH_DSL = {
 }
 
 REST_FRAMEWORK_EXTENSIONS = {
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60*15
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
 }
 CACHES = {
     "default": {
