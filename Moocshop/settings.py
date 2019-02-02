@@ -32,7 +32,7 @@ SECRET_KEY = '$q2t2@z(8!(i6gao-b7omxm4&m_e)a-+a#d#ib$3_es#z+m!32'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '192.168.1.69', ]
+ALLOWED_HOSTS = ['*']
 
 USE_X_FORWARDED_HOST = True
 
@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': "mxshop",
         'USER': 'root',
         'PASSWORD': "123456",
-        'HOST': "192.168.1.70",
+        'HOST': "127.0.0.1",
         'OPTIONS': {
             'init_command': 'SET default_storage_engine=INNODB',
         }
@@ -180,8 +180,8 @@ JWT_AUTH = {
 
 # STATIC_URL = '/static/'
 
-CELERY_BROKER_URL = 'redis://192.168.1.70:6379'
-CELERY_RESULT_BACKEND = 'redis://192.168.1.70:6379'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
@@ -191,7 +191,7 @@ REGEX_VIDEO = "^.*\.(?i)(MP4|mp4|MOV|mov|avi|AVI|rm|gif|wmv|rmvb|mpv|MPV|m4v|flv
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': '192.168.1.70:9200'
+        'hosts': '127.0.0.1:9200'
     },
 }
 
@@ -201,7 +201,7 @@ REST_FRAMEWORK_EXTENSIONS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.1.70:6379",
+        "LOCATION": "redis://127.0.0.1:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

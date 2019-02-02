@@ -1,0 +1,52 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    container_name: mysql
+    volumes:
+      # For this to work you must create a folder 'mysql_data' in the project root directory
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      # TODO - use an .env file for this (Django can use too)
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mxshop
+    ports:
+      - 3306:3306
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  website:
+    restart: always
+    build: .
+    volumes:
+      - ./Moocshop:/Moocshop
+      - ./logs/gunicorn:/gunicorn-logfiles
+      - media:/media
+      - static:/static
+    depends_on:
+      - mysql
+      - redis
+    env_file: .env
+    expose:
+      - "8000"
+
+  proxy:
+    build: ./nginx
+    ports:
+      - "1339:80"
+    volumes:
+      - static:/code/static
+      - media:/code/media
+    links:
+      - website:website
+
+
+
+
+volumes:
+  dbdata:
+  media:
+  static:
