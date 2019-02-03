@@ -2,8 +2,7 @@ language: python
 env:
   global:
   - AWS_DEFAULT_REGION=us-west-2
-  #- ECR_REPOSITORY_NAME=edge-service
-  #- TASK_NAME=EdgeService-Task
+
 
 before_install:
 - pip install --user awscli
