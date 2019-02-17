@@ -1,17 +1,17 @@
-language: python
-env:
-  global:
-  - AWS_DEFAULT_REGION=us-west-2
-#Ci continuous intergration
-before_install:
-- pip install --user awscli
-- export PATH=$PATH:$HOME/.local/bin
+# language: python
+# env:
+#   global:
+#   - AWS_DEFAULT_REGION=us-west-2
+# #Ci continuous intergration
+# before_install:
+# - pip install --user awscli
+# - export PATH=$PATH:$HOME/.local/bin
 
-python:
-  -"3.6"
+# python:
+#   -"3.6"
 
-install:
-  - pip install -r requirements/production.txt
+# install:
+#   - pip install -r requirements/production.txt
 
-script:
-  - pytest
+# script:
+#   - pytest
