@@ -1,0 +1,57 @@
+pip install supervisor
+
+supervisord -c /etc/supervisord.conf
+
+tool: supervisorctl
+
+mkdir conf 
+
+echo_supervisord_conf > conf/supervisord.conf
+
+supervisor_celery_worker.ini
+
+[program:imooc-celery-worker]
+command=python manage.py celery worker -l INFO
+directory=[project dire]
+environment=PATH='~/pyenv/versions/mooc/bin'
+stdout_logfile=work.log
+stderr_logfile=
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs=50
+priority=998
+
+supervisord.org
+
+supervisord -c conf/supervisord.conf
+supervisorctl
+
+supervisor_celery_beat.ini
+[program:imooc-celery-beat]
+command=python manage.py celery beat -l INFO
+directory=[project dire]
+environment=PATH='~/pyenv/versions/mooc/bin'
+stdout_logfile=beat.log
+stderr_logfile=
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs=50
+priority=997
+
+supervisor_flower.ini
+
+[program:imooc-celery-flower]
+command=python manage.py celery flower 
+directory=[project dire]
+environment=PATH='~/pyenv/versions/mooc/bin'
+stdout_logfile=flower.log
+stderr_logfile=
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs=50
+priority=996
+
+
